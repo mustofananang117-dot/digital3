@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undangan Pernikahan — Alexander & Clarissa</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-primary: rgba(250, 250, 250, 0.72);
+      --bg-surface: rgba(240, 243, 247, 0.68);
+      --bg-card: rgba(255, 255, 255, 0.82);
+      --accent-navy: #1B2A4A;
+      --accent-navy-light: #2C3E55;
+      --accent-gold: #C5A880;
+      --accent-gold-light: #E8D9C5;
+      --text-primary: #1A1E24;
+      --text-muted: #4A5568;
+      --border-color: rgba(27, 42, 74, 0.12);
+      
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: #0E1726;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-color: #0E1726;
+    }
+
+    /* App container for mobile-first layout */
+    .app-container {
+      max-width: 480px;
+      margin: 0 auto;
+      background-color: transparent;
+      min-height: 100vh;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* GLOBAL BACKGROUND SLIDESHOW - CYCLES THROUGH PRE-WEDDING PHOTOS */
+    .global-background-slideshow {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1), transform 8s ease-out;
+      transform: scale(1.08);
+      will-change: opacity, transform;
+    }
+
+    .bg-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .bg-overlay-dim {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(240, 243, 247, 0.55) 100%);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, .serif {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      color: var(--accent-navy);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+      text-align: center;
+      margin-bottom: 2rem;
+      display: block;
+      font-weight: 600;
+    }
+
+    section {
+      padding: 4.5rem 1.8rem;
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid rgba(27, 42, 74, 0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .btn-navy {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, rgba(27, 42, 74, 0.95) 0%, rgba(44, 62, 85, 0.95) 100%);
+      color: #FFFFFF !important;
+      padding: 0.95rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.5s ease;
+      box-shadow: 0 6px 20px rgba(27, 42, 74, 0.25);
+      position: relative;
+    }
+
+    .btn-navy:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(27, 42, 74, 0.4);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--accent-navy);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border: 1px solid var(--accent-navy);
+      transition: all 0.5s ease;
+      width: 100%;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(27, 42, 74, 0.1);
+    }
+
+    /* Floating Animations */
+    @keyframes floatSoft {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(0.8deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-frame-1 {
+      animation: floatSoft 10s ease-in-out infinite;
+    }
+
+    .floating-frame-2 {
+      animation: floatSoft 10s ease-in-out infinite 2.5s;
+    }
+
+    .floating-quote {
+      animation: floatSlow 8s ease-in-out infinite;
+    }
+
+    /* Scroll Reveal Initial & Active States */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(45px);
+      transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-on-scroll.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 1. GATE OPEN POINTER HINT ANIMATION */
+    .gate-pointer-container {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      pointer-events: none;
+      animation: pointerTap 1.8s ease-in-out infinite;
+    }
+
+    .gate-pointer-icon {
+      font-size: 1.5rem;
+      color: var(--accent-gold);
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    }
+
+    .gate-pointer-text {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
+
+    @keyframes pointerTap {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-8px) scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    /* 2. SCROLL INDICATOR ANIMATION (AFTER INVITATION OPENED) */
+    .scroll-indicator-wrapper {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1.5s ease 2.8s, visibility 1.5s ease 2.8s;
+      cursor: pointer;
+    }
+
+    .opened-animation .scroll-indicator-wrapper {
+      opacity: 0.9;
+      visibility: visible;
+    }
+
+    .scroll-indicator-text {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--accent-navy);
+      font-weight: 600;
+    }
+
+    .scroll-indicator-arrow {
+      font-size: 1.2rem;
+      color: var(--accent-navy);
+      animation: scrollBounce 2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(12px);
+      }
+    }
+
+    /* GERBANG BUKA UNDANGAN (SPLIT GATE ANIMATION) */
+    .gate-overlay {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      z-index: 1000;
+      display: flex;
+      pointer-events: auto;
+      transition: visibility 2.2s ease;
+    }
+
+    .gate-panel {
+      width: 50%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      transition: transform 2.2s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
+    }
+
+    .gate-left {
+      background-image: linear-gradient(90deg, rgba(27,42,74,0.92) 0%, rgba(27,42,74,0.78) 100%),
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000');
+      background-position: left center;
+      border-right: 1px solid var(--accent-gold);
+    }
+
+    .gate-right {
+      background-image: linear-gradient(270deg, rgba(27,42,74,0.92) 0%, rgba(27,42,74,0.78) 100%),
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000');
+      background-position: right center;
+      border-left: 1px solid var(--accent-gold);
+    }
+
+    .gate-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85%;
+      text-align: center;
+      color: #FFFFFF;
+      z-index: 1001;
+      transition: opacity 1.2s ease;
+    }
+
+    .gate-overlay.opened {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .gate-overlay.opened .gate-left {
+      transform: translateX(-100%);
+    }
+
+    .gate-overlay.opened .gate-right {
+      transform: translateX(100%);
+    }
+
+    .gate-overlay.opened .gate-content {
+      opacity: 0;
+    }
+
+    /* Hero section */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1.5rem 6rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      backdrop-filter: blur(1px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Staggered Text Entrance Styles */
+    .animate-text {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .opened-animation .animate-text-delay-1 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.8s;
+    }
+
+    .opened-animation .animate-text-delay-2 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 1.4s;
+    }
+
+    .opened-animation .animate-text-delay-3 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 2.0s;
+    }
+
+    .opened-animation .animate-text-delay-4 {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 2.6s;
+    }
+
+    /* INTRODUCTION SECTION (GLASS CARDS) */
+    #intro {
+      text-align: center;
+      background-color: rgba(240, 243, 247, 0.45);
+    }
+
+    .intro-quote {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #2D3748;
+      margin-bottom: 2rem;
+      font-style: italic;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .couple-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .couple-card {
+      background: rgba(255, 255, 255, 0.65);
+      padding: 2.2rem 1.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 35px rgba(27, 42, 74, 0.08);
+      position: relative;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Portrait Image Frame (3:4 Aspect Ratio) */
+    .portrait-frame-wrapper {
+      width: 175px;
+      height: 233px; /* 3:4 aspect ratio */
+      margin: 0 auto 1.5rem auto;
+      position: relative;
+    }
+
+    .portrait-frame {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid var(--accent-gold);
+      padding: 5px;
+      background-color: #FFFFFF;
+      box-shadow: 0 12px 28px rgba(27, 42, 74, 0.15);
+      display: block;
+    }
+
+    .couple-name {
+      font-size: 1.8rem;
+      color: var(--accent-navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .couple-parents {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .couple-ampersand {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--accent-gold);
+      font-style: italic;
+      margin: -1rem 0;
+    }
+
+    /* OUR LOVE STORY SECTION */
+    #story {
+      background-color: rgba(250, 250, 250, 0.45);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      bottom: 10px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--accent-navy) 0%, rgba(27,42,74,0.1) 100%);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      background: rgba(255, 255, 255, 0.65);
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 15px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #FFFFFF;
+      border: 2px solid var(--accent-navy);
+      box-shadow: 0 0 10px rgba(27, 42, 74, 0.2);
+    }
+
+    .timeline-date {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-title {
+      font-size: 1.3rem;
+      color: var(--accent-navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* PRE-WEDDING PHOTO GALLERY (3:4 ASPECT RATIO) */
+    #gallery {
+      background-color: rgba(240, 243, 247, 0.45);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 6px 15px rgba(27, 42, 74, 0.1);
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.5);
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(27, 42, 74, 0.2);
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox Modal for Gallery */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(14, 23, 38, 0.92);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 80vh;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid var(--accent-gold);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      color: #FFFFFF;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    /* EVENT DETAILS SECTION */
+    #events {
+      background-color: rgba(250, 250, 250, 0.45);
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 16px;
+      padding: 2.2rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(27, 42, 74, 0.06);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      position: relative;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .event-badge {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-navy);
+      background: rgba(27, 42, 74, 0.08);
+      padding: 0.35rem 1.1rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+    }
+
+    .event-schedule-block {
+      background: rgba(240, 243, 247, 0.65);
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+      border: 1px solid rgba(27, 42, 74, 0.08);
+    }
+
+    .event-schedule-title {
+      font-size: 0.95rem;
+      color: var(--accent-navy);
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .event-time {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .event-location {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 1.5rem 0 1.2rem 0;
+      line-height: 1.5;
+    }
+
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 2rem 0 1rem 0;
+    }
+
+    .countdown-box {
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 5px 15px rgba(27, 42, 74, 0.05);
+      padding: 0.8rem 0.4rem;
+      border-radius: 10px;
+      min-width: 65px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .countdown-num {
+      font-size: 1.4rem;
+      font-family: var(--font-serif);
+      color: var(--accent-navy);
+      font-weight: 600;
+    }
+
+    .countdown-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background-color: rgba(250, 250, 250, 0.5);
+      border-top: 1px solid var(--border-color);
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(10px);
+    }
+
+    .footer-names {
+      font-size: 2rem;
+      color: var(--accent-navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-thanks {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Floating Audio Button */
+    .audio-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--accent-navy);
+      color: var(--accent-navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      box-shadow: 0 4px 15px rgba(27,42,74,0.2);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .audio-control:active {
+      transform: scale(0.9);
+    }
+
+    .divider-gold {
+      width: 50px;
+      height: 1px;
+      background: var(--accent-gold);
+      margin: 1.5rem auto;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio Background Player -->
+  <audio id="weddingMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=wedding-piano-112836.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Audio Floating Control Toggle -->
+  <button class="audio-control" id="audioBtn" title="Toggle Music">
+    <i class="fas fa-music"></i>
+  </button>
+
+  <!-- GERBANG BUKA UNDANGAN (SPLIT GATE OVERLAY ANIMATION WITH TAP POINTER) -->
+  <div class="gate-overlay" id="gateOverlay">
+    <div class="gate-panel gate-left"></div>
+
+    <div class="gate-content">
+      <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--accent-gold); font-weight: 600;">
+        The Wedding Celebration
+      </span>
+      
+      <h1 class="serif" style="font-size: 2.8rem; margin: 1.2rem 0; line-height: 1.1; color: #FFFFFF;">
+        Alexander<br>
+        <span style="font-style: italic; color: var(--accent-gold); font-size: 1.5rem;">&</span><br>
+        Clarissa
+      </h1>
+
+      <p style="font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.8rem; color: #E8D9C5;">
+        Sabtu, 24 Oktober 2026
+      </p>
+
+      <button class="btn-navy" id="openBtn">
+        <i class="fas fa-envelope-open"></i> Buka Undangan
+      </button>
+
+      <!-- ANIMATED TAP POINTER INDICATOR BEFORE OPENING -->
+      <div class="gate-pointer-container">
+        <i class="fas fa-hand-pointer gate-pointer-icon"></i>
+        <span class="gate-pointer-text">Tekan untuk membuka</span>
+      </div>
+    </div>
+
+    <div class="gate-panel gate-right"></div>
+  </div>
+
+  <div class="app-container" id="mainContainer">
+
+    <!-- GLOBAL BACKGROUND SLIDESHOW USING ALL 4 GALLERY PRE-WEDDING IMAGES -->
+    <div class="global-background-slideshow" id="globalSlideshow">
+      <div class="bg-slide active" style="background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1000');"></div>
+      <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=1000');"></div>
+      <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1000');"></div>
+      <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1000');"></div>
+      <div class="bg-overlay-dim"></div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+      <div class="hero-content">
+        <span class="section-subtitle animate-text animate-text-delay-1">You Are Cordially Invited</span>
+        
+        <h1 class="serif animate-text animate-text-delay-2" style="font-size: 3rem; color: var(--accent-navy); margin: 1rem 0;">
+          Alexander
+          <span style="display: block; font-size: 1.5rem; font-style: italic; color: var(--accent-gold);">&</span>
+          Clarissa
+        </h1>
+
+        <p class="serif animate-text animate-text-delay-3 floating-quote" style="font-style: italic; font-size: 1.15rem; color: var(--text-muted); max-width: 320px; margin: 0 auto 2rem auto;">
+          "Dua jiwa, satu cerita. Kami mengundang Anda menjadi bagian dari awal perjalanan abadi kami."
+        </p>
+
+        <p class="animate-text animate-text-delay-4" style="font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-navy); font-weight: 600;">
+          Sabtu, 24 Oktober 2026
+        </p>
+      </div>
+
+      <!-- ANIMATED SCROLL DOWN INDICATOR (APPEARS AFTER UNDANGAN DIBUKA) -->
+      <div class="scroll-indicator-wrapper" id="scrollIndicator" onclick="scrollToIntro()">
+        <span class="scroll-indicator-text">Gulir ke bawah</span>
+        <i class="fas fa-chevron-down scroll-indicator-arrow"></i>
+      </div>
+    </section>
+
+    <!-- INTRO SECTION -->
+    <section id="intro">
+      <span class="section-subtitle reveal-on-scroll">With Joy & Gratitude</span>
+      
+      <p class="intro-quote reveal-on-scroll floating-quote">
+        "Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam hari bahagia kami."
+      </p>
+
+      <div class="divider-gold reveal-on-scroll"></div>
+
+      <div class="couple-container">
+        <!-- Groom (3:4 Portrait Frame) -->
+        <div class="couple-card reveal-on-scroll" id="groomCard">
+          <div class="portrait-frame-wrapper floating-frame-1">
+            <img 
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" 
+              alt="Alexander Rayhan" 
+              class="portrait-frame" 
+            />
+          </div>
+          <h2 class="couple-name">Alexander Rayhan, S.E.</h2>
+          <p class="couple-parents">
+            Putra Pertama dari<br>
+            <strong>Bpk. Hartono Rayhan & Ibu Elena Rayhan</strong>
+          </p>
+        </div>
+
+        <div class="couple-ampersand reveal-on-scroll">&</div>
+
+        <!-- Bride (3:4 Portrait Frame) -->
+        <div class="couple-card reveal-on-scroll" id="brideCard">
+          <div class="portrait-frame-wrapper floating-frame-2">
+            <img 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" 
+              alt="Clarissa Amanda" 
+              class="portrait-frame" 
+            />
+          </div>
+          <h2 class="couple-name">Clarissa Amanda, M.Ds.</h2>
+          <p class="couple-parents">
+            Putri Kedua dari<br>
+            <strong>Bpk. Gunawan Amanda & Ibu Sofia Amanda</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR LOVE STORY -->
+    <section id="story">
+      <span class="section-subtitle reveal-on-scroll">Chapters of Us</span>
+      <h2 class="section-title reveal-on-scroll" style="margin-bottom: 2.5rem;">Perjalanan Cinta</h2>
+
+      <div class="timeline">
+        <div class="timeline-item reveal-on-scroll">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">12 OKTOBER 2021</div>
+          <h3 class="timeline-title">Pertemuan Pertama</h3>
+          <p class="timeline-desc">
+            Takdir mempertemukan kami dalam sebuah proyek kolaborasi kreatif di Jakarta. Sebuah percakapan singkat yang berlanjut menjadi diskusi tanpa akhir.
+          </p>
+        </div>
+
+        <div class="timeline-item reveal-on-scroll">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">14 FEBRUARI 2023</div>
+          <h3 class="timeline-title">Sebuah Komitmen</h3>
+          <p class="timeline-desc">
+            Di bawah hangatnya matahari terbenam Bali, kami mengikat janji untuk saling mendukung dan berjalan beriringan mengatasi segala tantangan.
+          </p>
+        </div>
+
+        <div class="timeline-item reveal-on-scroll">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">24 OKTOBER 2026</div>
+          <h3 class="timeline-title">Awal Yang Baru</h3>
+          <p class="timeline-desc">
+            Langkah puncak di mana kami mengikat janji suci di hadapan Tuhan, keluarga, dan sahabat tercinta untuk selamanya.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRE-WEDDING GALLERY (4 PHOTOS 3:4 RATIO) -->
+    <section id="gallery">
+      <span class="section-subtitle reveal-on-scroll">Captured Moments</span>
+      <h2 class="section-title reveal-on-scroll">Galeri Pre-Wedding</h2>
+
+      <div class="gallery-grid">
+        <div class="gallery-item reveal-on-scroll" onclick="openLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800" alt="Prewedding 1" class="gallery-img" />
+        </div>
+        <div class="gallery-item reveal-on-scroll" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800" alt="Prewedding 2" class="gallery-img" />
+        </div>
+        <div class="gallery-item reveal-on-scroll" onclick="openLightbox('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800" alt="Prewedding 3" class="gallery-img" />
+        </div>
+        <div class="gallery-item reveal-on-scroll" onclick="openLightbox('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800" alt="Prewedding 4" class="gallery-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENT DETAILS -->
+    <section id="events">
+      <span class="section-subtitle reveal-on-scroll">Save The Date</span>
+      <h2 class="section-title reveal-on-scroll">Detail Acara</h2>
+
+      <!-- Countdown -->
+      <div class="countdown-container reveal-on-scroll" id="countdown">
+        <div class="countdown-box">
+          <div class="countdown-num" id="days">00</div>
+          <div class="countdown-label">Hari</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="hours">00</div>
+          <div class="countdown-label">Jam</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="minutes">00</div>
+          <div class="countdown-label">Menit</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="seconds">00</div>
+          <div class="countdown-label">Detik</div>
+        </div>
+      </div>
+
+      <div class="divider-gold reveal-on-scroll"></div>
+
+      <!-- Combined Location Card -->
+      <div class="event-card reveal-on-scroll">
+        <span class="event-badge">Akad Nikah & Resepsi Pernikahan</span>
+        <h3 class="serif" style="font-size: 1.8rem; color: var(--accent-navy);">Sabtu, 24 Oktober 2026</h3>
+        
+        <div class="event-schedule-block">
+          <div class="event-schedule-title">Akad Nikah</div>
+          <div class="event-time">
+            <i class="far fa-clock" style="color: var(--accent-navy);"></i>
+            <span>08.00 - 10.00 WIB</span>
+          </div>
+        </div>
+
+        <div class="event-schedule-block">
+          <div class="event-schedule-title">Resepsi Pernikahan</div>
+          <div class="event-time">
+            <i class="far fa-clock" style="color: var(--accent-navy);"></i>
+            <span>11.30 - 14.00 WIB</span>
+          </div>
+        </div>
+        
+        <p class="event-location">
+          <i class="fas fa-building" style="color: var(--accent-gold); margin-right: 0.3rem;"></i>
+          <strong>Grand Ballroom — Plataran Hutan Kota</strong><br>
+          Jl. Jend. Sudirman No. Kav. 54-55, Gelora, Jakarta Pusat
+        </p>
+
+        <a href="https://maps.google.com" target="_blank" class="btn-outline">
+          <i class="fas fa-location-dot"></i> Petunjuk Maps
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <h2 class="footer-names serif">Alex & Clarissa</h2>
+      <p class="footer-thanks">Merupakan suatu kehormatan bagi kami atas kehadiran dan doa restu Anda.</p>
+      <p style="font-size: 0.7rem; color: rgba(27,42,74,0.4); margin-top: 2rem; letter-spacing: 0.1em;">
+        DIGITAL INVITATION — 2026
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightboxModal" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img src="" alt="Zoomed Photo" id="lightboxImg" class="lightbox-img" />
+  </div>
+
+  <script>
+    // 1. Split Gate Animation, Staggered Text & Music Trigger
+    const openBtn = document.getElementById('openBtn');
+    const gateOverlay = document.getElementById('gateOverlay');
+    const mainContainer = document.getElementById('mainContainer');
+    const weddingMusic = document.getElementById('weddingMusic');
+    const audioBtn = document.getElementById('audioBtn');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    let isPlaying = false;
+    let bgSlideshowInterval = null;
+
+    openBtn.addEventListener('click', () => {
+      // Trigger CSS transition to slide left and right gate curtains
+      gateOverlay.classList.add('opened');
+      
+      // Trigger Staggered Text Animations & Reveal Scroll Indicator on Hero Section
+      mainContainer.classList.add('opened-animation');
+      
+      // Allow scrolling on main document
+      document.body.style.overflow = 'auto';
+
+      // Start the global auto-rotating background slideshow
+      startGlobalBackgroundSlideshow();
+
+      // Trigger reveal check once opened
+      triggerScrollReveal();
+
+      // Play background music automatically
+      weddingMusic.play().then(() => {
+        isPlaying = true;
+        audioBtn.innerHTML = '<i class="fas fa-volume-high"></i>';
+        audioBtn.style.color = '#1B2A4A';
+      }).catch(err => {
+        console.log("Autoplay hindered by browser policy:", err);
+      });
+    });
+
+    // Scroll smoothly to intro section when scroll indicator is clicked
+    function scrollToIntro() {
+      const introSection = document.getElementById('intro');
+      if (introSection) {
+        introSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Hide scroll indicator once user has scrolled past hero
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 150 && scrollIndicator) {
+        scrollIndicator.style.opacity = '0';
+        scrollIndicator.style.pointerEvents = 'none';
+      } else if (window.scrollY <= 150 && mainContainer.classList.contains('opened-animation') && scrollIndicator) {
+        scrollIndicator.style.opacity = '0.9';
+        scrollIndicator.style.pointerEvents = 'auto';
+      }
+    });
+
+    // 2. Global Auto-Rotating Slideshow across all section backgrounds
+    function startGlobalBackgroundSlideshow() {
+      const slides = document.querySelectorAll('#globalSlideshow .bg-slide');
+      let currentIndex = 0;
+
+      if (bgSlideshowInterval) clearInterval(bgSlideshowInterval);
+
+      // Rotates every 6 seconds with a slow 2.5s crossfade
+      bgSlideshowInterval = setInterval(() => {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+      }, 6000);
+    }
+
+    // Audio Control Button Toggle
+    audioBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        weddingMusic.pause();
+        audioBtn.innerHTML = '<i class="fas fa-music"></i>';
+        audioBtn.style.color = '#5A6578';
+      } else {
+        weddingMusic.play();
+        audioBtn.innerHTML = '<i class="fas fa-volume-high"></i>';
+        audioBtn.style.color = '#1B2A4A';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // 3. Floating Scroll Parallax Effect for Couple Cards & Quotes
+    const groomCard = document.getElementById('groomCard');
+    const brideCard = document.getElementById('brideCard');
+
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      
+      if (groomCard && brideCard) {
+        const groomRect = groomCard.getBoundingClientRect();
+        if (groomRect.top < window.innerHeight && groomRect.bottom > 0) {
+          const shiftY = (scrollPos * 0.02);
+          groomCard.style.transform = `translateY(${-shiftY % 10}px)`;
+          brideCard.style.transform = `translateY(${shiftY % 10}px)`;
+        }
+      }
+    });
+
+    // 4. Scroll Reveal Animations via Intersection Observer
+    function triggerScrollReveal() {
+      const revealElements = document.querySelectorAll('.reveal-on-scroll');
+
+      const observerOptions = {
+        root: null,
+        threshold: 0.1,
+        rootMargin: "0px 0px -20px 0px"
+      };
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      revealElements.forEach(el => revealObserver.observe(el));
+    }
+
+    // 5. Countdown Timer Logic (24 October 2026)
+    const targetDate = new Date('October 24, 2026 08:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+        document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 6. Gallery Lightbox Modal Logic
+    function openLightbox(imgSrc) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      img.src = imgSrc;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('active');
+    }
+
+    // Initialize Intersection Observer on load
+    document.addEventListener('DOMContentLoaded', triggerScrollReveal);
+  </script>
+</body>
+</html>
